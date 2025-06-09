@@ -6,38 +6,38 @@ _start:
 Loop:
 	li t0,SWITCHES
 	lw t1,0(t0)
-	#SW 9:0
+	#SW tu 9 den 0
 	andi a0,t1,0x3ff
-	#HamCon
-	jal ra,Tim0b1101
+	#Ham con
+	jal ra,Day_0b1101
 	#In ra LEDS
 	li t0,LEDS
 	sw a0,0(t0)
 	j Loop
-Tim0b1101:
+Day_0b1101:
 	addi sp,sp,-16
 	sw ra,0(sp)
 	sw s0,4(sp)
 	sw s1,8(sp)
 	sw s2,12(sp)
 	
-	mv s0,a0 #N
-	li s1,0  #Ket Qua
-	li s2,0b1101
+	mv s0,a0	#N
+	li s1,0	#Luu ket qua
+	li s2,0b1101	#Tim 1101
 	
-	li t0,7	#So lan
-	li t1,0	#Dem so lan
-Kiemtra:
+	li t0,7 #MAX=7
+	li t1,0 #0 de dem toi 7
+TimDaySo:
 	beq t1,t0,KetThuc
 	srl t2,s0,t1
 	andi t2,t2,0xf
-	beq s2,t2,KetQua
+	beq s2,t2,TimThay
 	j TiepTuc
-KetQua:
+TimThay:
 	addi s1,s1,1
 TiepTuc:
 	addi t1,t1,1
-	j Kiemtra
+	j TimDaySo
 KetThuc:
 	mv a0,s1
 	lw ra,0(sp)
